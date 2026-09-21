@@ -20,7 +20,7 @@ d3.csv("anscombe.csv").then(function (data) {
     return d.dataset === "IV";
   });
 
-  function drawScatterplot(dataset) {
+  function drawScatterplot(dataset, color) {
     const width = 500;
     const height = 500;
 
@@ -44,7 +44,14 @@ d3.csv("anscombe.csv").then(function (data) {
       .attr("cy", function (d) {
         return yScale(d.y);
       })
-      .attr("r", 5);
+      .attr("r", 5)
+      .attr("fill", function (d) {
+        if (d.y <= 6) {
+          return "black";
+        } else {
+          return color;
+        }
+      });
 
     svg
       .append("g")
@@ -57,10 +64,10 @@ d3.csv("anscombe.csv").then(function (data) {
       .call(d3.axisLeft(yScale));
   }
 
-  drawScatterplot(dataset1);
-  drawScatterplot(dataset2);
-  drawScatterplot(dataset3);
-  drawScatterplot(dataset4);
+  drawScatterplot(dataset1, "red");
+  drawScatterplot(dataset2, "blue");
+  drawScatterplot(dataset3, "green");
+  drawScatterplot(dataset4, "orange");
 
   // const xScale = d3.scaleLinear().domain([0, 20]).range([50, 450]);
   // const yScale = d3.scaleLinear().domain([0, 12]).range([450, 50]);
